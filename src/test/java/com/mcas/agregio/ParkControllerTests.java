@@ -1,48 +1,56 @@
 package com.mcas.agregio;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.mcas.agregio.market.Market;
 import com.mcas.agregio.park.Park;
 import com.mcas.agregio.park.ParkController;
+import com.mcas.agregio.park.ParkService;
 import com.mcas.agregio.park.ProductionType;
 
+@ExtendWith(MockitoExtension.class)
 class ParkControllerTests {
 
-    private ParkController parkController;
+    @Mock
+    private ParkService parkService;
 
-    @BeforeEach
-    void beforeEach() {
-        parkController = new ParkController();
-    }
+    @InjectMocks
+    private ParkController parkController;
 
     @Test
     void shouldBuildPark() {
         // Given
         String name = "SunPower";
+        int id = Objects.hash(name);
         ProductionType productionType = ProductionType.SOLAR;
+        Park park = new Park(id, name, productionType);
+        when(parkService.savePark(park)).thenReturn(id);
         // When
-        Park park = parkController.createPark(name, productionType);
+        int returnedId = parkController.createPark(park);
         // Then
-        assertNotNull(park);
-        assertNotNull(park.getId());
-        assertEquals(name, park.getName());
-        assertEquals(productionType, park.getProductionType());
+        assertEquals(returnedId, park.getId());
     }
 
     @Test
     void shouldReturnListOfParksForMarket() {
         // Given
         Market market = Market.PRIMARY_RESERVE;
+        List<Park> parks = new ArrayList<>();
+        when(parkService.getParks(market)).thenReturn(parks);
         // When
-        List<Park> parks = parkController.getSellingParks(market);
+        List<Park> returnedParks = parkController.getSellingParks(market);
         // Then
-        assertNotNull(parks);
+        assertEquals(returnedParks, parks);
     }
 }

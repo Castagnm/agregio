@@ -1,21 +1,17 @@
 package com.mcas.agregio.park;
 
-import java.util.Objects;
-
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 // Electricity Production Park
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Park {
-    private final int id;
+    private int id;
 
-    private final String name;
+    private String name;
 
-    private final ProductionType productionType;
-
-    public Park(String name, ProductionType productionType) {
-        this.id = Objects.hash(name);
-        this.name = name;
-        this.productionType = productionType;
-    }
+    private ProductionType productionType;
 }
