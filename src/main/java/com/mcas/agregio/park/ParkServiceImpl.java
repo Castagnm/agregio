@@ -1,7 +1,9 @@
 package com.mcas.agregio.park;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -24,20 +26,14 @@ public class ParkServiceImpl implements ParkService {
         return park.getId();
     }
 
-    public List<Park> getParks(Market market) {
+    public Set<Park> getParks(Market market) {
         List<Offer> offers = offerService.getOffers(market);
 
         List<Block> blocks = new ArrayList<>();
+        offers.forEach(e -> blocks.addAll(e.getBlocks()));
 
-        for(Offer offer : offers) {
-            blocks.addAll(offer.getBlocks());
-        }
-
-        List<Park> parks = new ArrayList<>();
-
-        for(Block block : blocks) {
-            parks.addAll(block.getProducers().keySet());
-        }
+        Set<Park> parks = new HashSet<>();
+        blocks.forEach(e -> parks.addAll(e.getProducers().keySet()));
         
         return parks;
     }

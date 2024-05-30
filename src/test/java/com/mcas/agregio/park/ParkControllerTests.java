@@ -3,9 +3,9 @@ package com.mcas.agregio.park;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,10 +14,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.mcas.agregio.market.Market;
-import com.mcas.agregio.park.Park;
-import com.mcas.agregio.park.ParkController;
-import com.mcas.agregio.park.ParkService;
-import com.mcas.agregio.park.ProductionType;
 
 @ExtendWith(MockitoExtension.class)
 class ParkControllerTests {
@@ -46,10 +42,10 @@ class ParkControllerTests {
     void shouldReturnListOfParksForMarket() {
         // Given
         Market market = Market.PRIMARY_RESERVE;
-        List<Park> parks = new ArrayList<>();
+        Set<Park> parks = new HashSet<>();
         when(parkService.getParks(market)).thenReturn(parks);
         // When
-        List<Park> returnedParks = parkController.getSellingParks(market);
+        Set<Park> returnedParks = parkController.getSellingParks(market);
         // Then
         assertEquals(returnedParks, parks);
     }

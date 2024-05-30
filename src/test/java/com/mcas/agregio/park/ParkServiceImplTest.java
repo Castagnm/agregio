@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,7 +49,7 @@ class ParkServiceImplTest {
         // Given
         Market market = Market.PRIMARY_RESERVE;
         // When
-        List<Park> parks = parkService.getParks(market);
+        Set<Park> parks = parkService.getParks(market);
         // Then
         assertNotNull(parks);
     }
@@ -70,7 +71,7 @@ class ParkServiceImplTest {
         Offer offer = new Offer(List.of(block));
         when(offerService.getOffers(market)).thenReturn(List.of(offer));
         // When
-        List<Park> parks = parkService.getParks(market);
+        Set<Park> parks = parkService.getParks(market);
         // Then
         assertTrue(parks.stream().anyMatch(e -> e.equals(sunParkProducer)));
     }

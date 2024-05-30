@@ -1,6 +1,6 @@
 package com.mcas.agregio.park;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +32,7 @@ public class ParkController {
     }
 
     @GetMapping
-    public List<Park> getSellingParks(@RequestParam Market market) {
+    public Set<Park> getSellingParks(@RequestParam Market market) {
         if(market == null) throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
         return parkService.getParks(market);
     }

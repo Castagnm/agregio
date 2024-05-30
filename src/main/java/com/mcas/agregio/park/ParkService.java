@@ -1,6 +1,6 @@
 package com.mcas.agregio.park;
 
-import java.util.List;
+import java.util.Set;
 
 import com.mcas.agregio.market.Market;
 
@@ -8,5 +8,5 @@ public interface ParkService {
     
     int savePark(Park park);
 
-    List<Park> getParks(Market market);
+    Set<Park> getParks(Market market);
 }
