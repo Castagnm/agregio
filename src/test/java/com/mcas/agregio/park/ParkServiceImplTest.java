@@ -68,7 +68,7 @@ class ParkServiceImplTest {
 
         Block block = new Block(3, 50, blockProducers);
 
-        Offer offer = new Offer(List.of(block));
+        Offer offer = new Offer(List.of(block), Market.PRIMARY_RESERVE);
         when(offerService.getOffers(market)).thenReturn(List.of(offer));
         // When
         Set<Park> parks = parkService.getParks(market);
