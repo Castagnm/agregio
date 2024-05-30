@@ -7,35 +7,35 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
+import com.mcas.agregio.block.Block;
+import com.mcas.agregio.block.BlockService;
 import com.mcas.agregio.market.Market;
-import com.mcas.agregio.offer.Block;
-import com.mcas.agregio.offer.Offer;
-import com.mcas.agregio.offer.OfferService;
 
 @Service
 public class ParkServiceImpl implements ParkService {
 
-    private final OfferService offerService;
+    private final List<Park> parks;
 
-    public ParkServiceImpl(OfferService offerService) {
-        this.offerService = offerService;
+    private final BlockService blockService;
+
+    public ParkServiceImpl(BlockService blockService) {
+        this.blockService = blockService;
+        this.parks = new ArrayList<>();
     }
 
     
     public int savePark(Park park) {
+        parks.add(park);
         return park.getId();
     }
 
     public Set<Park> getParks(Market market) {
-        List<Offer> offers = offerService.getOffers(market);
+        List<Block> blocks = blockService.getBlocks(market);
 
-        List<Block> blocks = new ArrayList<>();
-        offers.forEach(e -> blocks.addAll(e.getBlocks()));
-
-        Set<Park> parks = new HashSet<>();
+        Set<Park> matchingParks = new HashSet<>();
         blocks.forEach(e -> parks.addAll(e.getProducers().keySet()));
         
-        return parks;
+        return matchingParks;
     }
     
 }

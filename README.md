@@ -1,5 +1,5 @@
 # Agregio Test API Project
 
-## dev/park
+## TODO
 
-branch focused on the development of the initial dev/park API.
+Create a Production which will replace the current map '<Park, Integer>' located in the blocks : instead, a new API, handled by ProductionController will allow us to declare which park will produce for which block and how many quantity of MW.

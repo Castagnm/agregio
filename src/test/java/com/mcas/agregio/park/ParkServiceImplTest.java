@@ -17,8 +17,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.mcas.agregio.block.Block;
+import com.mcas.agregio.block.BlockService;
 import com.mcas.agregio.market.Market;
-import com.mcas.agregio.offer.Block;
 import com.mcas.agregio.offer.Offer;
 import com.mcas.agregio.offer.OfferService;
 
@@ -26,7 +27,7 @@ import com.mcas.agregio.offer.OfferService;
 class ParkServiceImplTest {
 
     @Mock
-    private OfferService offerService;
+    private BlockService blockService;
 
     @InjectMocks
     private ParkServiceImpl parkService;
@@ -66,10 +67,10 @@ class ParkServiceImplTest {
         Map<Park, Integer> blockProducers = new HashMap<>();
         blockProducers.put(sunParkProducer, 300);
 
-        Block block = new Block(3, 50, blockProducers);
+        Offer offer = new Offer(0, Market.PRIMARY_RESERVE);
+        Block block = new Block(3, 50, offer, blockProducers);
 
-        Offer offer = new Offer(List.of(block), Market.PRIMARY_RESERVE);
-        when(offerService.getOffers(market)).thenReturn(List.of(offer));
+        when(blockService.getBlocks(market)).thenReturn(List.of(block));
         // When
         Set<Park> parks = parkService.getParks(market);
         // Then
